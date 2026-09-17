@@ -1,9 +1,47 @@
 import React from 'react'
+import { imagesDummyData } from '../assets/assets'
+import assets from '../assets/assets';
 
-const RightSideBar = () => {
+const RightSidebar = ({ selectedUser, setSelectedUser }) => {
   return (
-    <div>rightSideBar</div>
+    selectedUser && (
+      <div className={`bg-[#818589]/10 text-white w-full relative overflow-y-scroll ${selectedUser ? 'max-md:hidden' : ''}`}>
+        <div className='pt-16 flex flex-col items-center gap-2 text-xs'>
+          <img 
+            src={selectedUser?.profilePic || assets.avatar_icon} 
+            alt="" 
+            className='w-20 aspect-[1/1] rounded-full' 
+          />
+          <h1 className='px-10 text-base font-medium flex items-center gap-2'>
+            <span className='w-2 h-2 rounded-full bg-green-500'></span>
+            {selectedUser.fullName}
+          </h1>
+          <p className='px-8 text-center text-gray-400'>{selectedUser.bio}</p>
+        </div>
+
+        <hr className='border-gray-600 my-4' />
+
+        <div className='px-5 text-xs'>
+          <p>Media</p>
+          <div className='max-h-[200px] overflow-y-scroll grid grid-cols-3 gap-4 opacity-80 mt-2'>
+            {imagesDummyData.map((url, index) => (
+              <div 
+                key={index} 
+                onClick={() => window.open(url)} 
+                className='cursor-pointer rounded'
+              >
+                <img src={url} alt="" className='h-full rounded-md' />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <button className='absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-400 to-violet-600 text-white border-none text-sm font-light py-2 px-20 rounded-full cursor-pointer'>
+          Logout
+        </button>
+      </div>
+    )
   )
 }
 
-export default RightSideBar
+export default RightSidebar
